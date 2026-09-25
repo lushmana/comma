@@ -420,7 +420,7 @@ fn print_completions<G: Generator>(generator: G, cmd: &mut clap::Command, bin_na
 
 /// Runs programs without installing them
 #[derive(Parser)]
-#[clap(version = crate_version!(), trailing_var_arg = true)]
+#[clap(version = crate_version!())]
 #[command(subcommand_negates_reqs = true)]
 struct Opt {
     /// Generate the man page, then exit
@@ -479,7 +479,7 @@ struct Opt {
     delete_entry: bool,
 
     /// Command to run
-    #[clap(required_unless_present_any = ["empty_cache", "mangen", "print_completions"], name = "cmd", value_hint = ValueHint::Other)]
+    #[clap(required_unless_present_any = ["empty_cache", "mangen", "print_completions"], name = "cmd", value_hint = ValueHint::Other, trailing_var_arg = true)]
     cmd: Vec<String>,
 
     #[clap(subcommand)]
@@ -498,6 +498,6 @@ enum SubCmds {
 #[derive(Args)]
 struct ManArgs {
     /// Command to show manpage for
-    #[clap(required = true, name = "cmd")]
+    #[clap(required = true, name = "cmd", trailing_var_arg = true)]
     cmd: Vec<String>,
 }
